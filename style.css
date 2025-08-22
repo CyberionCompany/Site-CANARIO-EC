@@ -1,0 +1,236 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+    /* Paleta de Cores do Canário Esporte Clube */
+    --primary-color: #0a6a0a;
+    --accent-color: #ffdd00;
+    --accent-text-color: #3d3400;
+
+    /* Cores de suporte */
+    --bg-color: #F8F9FA;
+    --sidebar-bg: #FFFFFF;
+    --card-bg: #FFFFFF;
+    --text-color: #343A40;
+    --text-muted: #6C757D;
+    --border-color: #E9ECEF;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    --shadow-hover: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    overflow-x: hidden; /* Previne scroll horizontal */
+}
+
+.container {
+    display: flex;
+}
+
+/* --- Barra Lateral --- */
+.sidebar {
+    width: 260px;
+    background-color: var(--sidebar-bg);
+    border-right: 1px solid var(--border-color);
+    padding: 1.5rem;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease-in-out;
+}
+
+.logo { display: flex; align-items: center; margin-bottom: 2.5rem; }
+.logo img { height: 45px; width: 45px; border-radius: 8px; margin-right: 1rem; }
+.logo h2 { font-size: 1.5rem; font-weight: 700; color: var(--primary-color); }
+.main-nav h3 { font-size: 0.8rem; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1rem; }
+.main-nav ul { list-style: none; }
+
+.main-nav li a {
+    display: flex;
+    align-items: center;
+    padding: 0.9rem 1rem;
+    text-decoration: none;
+    color: var(--text-muted);
+    font-weight: 500;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.main-nav li a i { margin-right: 1rem; width: 20px; }
+.main-nav li.active a, .main-nav li a:hover { background-color: var(--primary-color); color: white; }
+.sidebar-footer { margin-top: auto; font-size: 0.8rem; color: var(--text-muted); }
+
+/* --- Conteúdo Principal --- */
+.main-content {
+    margin-left: 260px;
+    width: calc(100% - 260px);
+    padding: 1.5rem 2rem;
+    transition: margin-left 0.3s ease-in-out;
+}
+
+.main-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+.search-bar { display: flex; align-items: center; background-color: white; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid var(--border-color); width: 300px; }
+.search-bar i { color: var(--text-muted); }
+.search-bar input { border: none; outline: none; margin-left: 0.5rem; width: 100%; background: none; }
+.user-profile { display: flex; align-items: center; gap: 1.5rem; }
+.user-profile i { font-size: 1.2rem; color: var(--text-muted); }
+
+/* --- ELEMENTOS DA RESPONSIVIDADE (INICIALMENTE OCULTOS) --- */
+.menu-toggle-btn {
+    display: none; /* Oculto em telas grandes */
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: var(--text-color);
+}
+
+#overlay {
+    display: none; /* Oculto em telas grandes */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+body.sidebar-open #overlay {
+    display: block;
+    opacity: 1;
+}
+
+/* --- ANIMAÇÕES --- */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.page { display: none; }
+.page.active { display: block; animation: fadeIn 0.5s ease-in-out; }
+
+.animated-element {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+.animated-element.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.section-title { font-size: 1.8rem; margin-bottom: 1.5rem; color: var(--primary-color); }
+.card {
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover { transform: translateY(-5px); box-shadow: var(--shadow-hover); }
+.card-body { padding: 1.5rem; }
+.card-img-top { width: 100%; height: 200px; object-fit: cover; }
+.card h3 { margin-bottom: 0.5rem; }
+.card p { color: var(--text-muted); line-height: 1.6; }
+.card-meta { font-size: 0.8rem; color: var(--text-muted); margin-top: 1rem; display: block; }
+.btn { padding: 12px 22px; border-radius: 8px; border: none; cursor: pointer; font-weight: 600; transition: all 0.3s; font-size: 0.9rem; text-transform: uppercase; }
+.btn-primary { background-color: var(--primary-color); color: white; }
+.btn-primary:hover { background-color: #075207; transform: translateY(-2px); }
+.btn-accent { background-color: var(--accent-color); color: var(--accent-text-color); }
+.btn-accent:hover { background-color: #e6c800; transform: translateY(-2px); }
+.btn-secondary { background-color: var(--bg-color); color: var(--text-color); border: 1px solid var(--border-color); }
+.btn-secondary:hover { background-color: #e9ecef; }
+
+.hero-card { background: linear-gradient(90deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.1) 100%), url('./assets/hero-background.jpg') no-repeat center center/cover; border-radius: 12px; padding: 4rem; color: white; margin-bottom: 2rem; }
+.hero-text h1 { font-size: 2.5rem; margin-bottom: 1rem; }
+.hero-text p { color: #f1f1f1; max-width: 500px; margin-bottom: 2rem; }
+.content-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; }
+.support-card { padding: 1.5rem; text-align: center; }
+.support-card p { margin: 1rem 0; }
+.donation-page { text-align: center; }
+.donation-page img { max-width: 200px; margin-bottom: 1rem; }
+.document-list { list-style: none; }
+.document-list li a { display: block; padding: 1rem; border-radius: 8px; background-color: var(--bg-color); margin-bottom: 0.5rem; text-decoration: none; color: var(--text-color); font-weight: 500; transition: background-color 0.2s; }
+.document-list li a:hover { background-color: #e9ecef; }
+.document-list i { float: right; color: var(--text-muted); }
+.testimonial { margin-top: 1.5rem; border-left: 3px solid var(--accent-color); padding-left: 1rem; }
+.testimonial cite { font-style: normal; font-weight: 600; color: var(--text-color); }
+#contactForm input, #contactForm textarea { width: 100%; padding: 1rem; margin-bottom: 1rem; border: 1px solid var(--border-color); border-radius: 8px; background-color: var(--bg-color); font-family: 'Inter', sans-serif; }
+#contactForm textarea { resize: vertical; }
+
+/* --- RESPONSIVIDADE --- */
+/* Tablet e menores */
+@media (max-width: 1024px) {
+    .sidebar { 
+        transform: translateX(-100%); /* Esconde a sidebar fora da tela por padrão */
+        box-shadow: var(--shadow-hover);
+    }
+
+    body.sidebar-open .sidebar {
+        transform: translateX(0); /* Mostra a sidebar quando o body tiver a classe */
+    }
+
+    .main-content { 
+        margin-left: 0; 
+        width: 100%; 
+    }
+    
+    .menu-toggle-btn {
+        display: block; /* Mostra o botão hambúrguer */
+    }
+
+    .main-header {
+        justify-content: space-between;
+    }
+
+    .search-bar {
+        /* Opcional: esconder a barra de busca para dar espaço ao menu e perfil */
+        display: none; 
+    }
+    
+    .content-grid { 
+        grid-template-columns: 1fr; 
+    }
+}
+
+/* Celular */
+@media (max-width: 768px) {
+    .main-content { padding: 1rem; }
+    
+    .main-header {
+        flex-wrap: wrap; /* Permite que os itens quebrem linha */
+        gap: 1rem;
+    }
+    
+    .search-bar {
+        display: flex; /* Reexibe a barra de busca */
+        width: 100%;
+        order: 3; /* Coloca a barra de busca por último */
+    }
+    
+    .user-profile {
+        margin-left: auto; /* Empurra o perfil para a direita, ao lado do menu */
+    }
+
+    .hero-card { padding: 2rem; }
+    .hero-text h1 { font-size: 2rem; }
+    .hero-text p { font-size: 1rem; }
+    .section-title { font-size: 1.5rem; }
+}

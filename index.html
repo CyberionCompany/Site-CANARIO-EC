@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canário Esporte Clube - Site Oficial</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="logo">
+                <img src="./assets/logo.jpg" alt="Logo Canário Esporte Clube">
+                <h2>Canário EC</h2>
+            </div>
+            <nav class="main-nav">
+                <h3>Menu</h3>
+                <ul>
+                    <li class="active"><a href="#home"><i class="fas fa-home"></i> Início</a></li>
+                    <li><a href="#sobre"><i class="fas fa-info-circle"></i> Sobre Nós</a></li>
+                    <li><a href="#doacoes"><i class="fas fa-hand-holding-heart"></i> Doações</a></li>
+                    <li><a href="#transparencia"><i class="fas fa-file-invoice"></i> Transparência</a></li>
+                    <li><a href="#contato"><i class="fas fa-envelope"></i> Contato</a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <p>&copy; 2025 Canário Esporte Clube</p>
+            </div>
+        </aside>
+
+        <div id="overlay"></div>
+
+        <main class="main-content">
+            <header class="main-header">
+                <button id="menu-toggle" class="menu-toggle-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Buscar no site...">
+                </div>
+                <div class="user-profile">
+                    <i class="far fa-bell"></i>
+                    <i class="far fa-user-circle"></i>
+                    <span>Visitante</span>
+                </div>
+            </header>
+
+            <section id="home" class="page active">
+                <div class="hero-card animated-element">
+                    <div class="hero-text">
+                        <h1>Transforme Vidas Através do Esporte</h1>
+                        <p>Sua contribuição ajuda crianças a realizarem sonhos e a construírem um futuro melhor.</p>
+                        <a href="#doacoes" class="btn btn-accent">Doe Agora via PIX <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="main-column">
+                        <h2 class="section-title animated-element">Últimas Notícias</h2>
+                        <div class="card animated-element">
+                            <img src="./assets/criancas.png" class="card-img-top" alt="Crianças jogando futebol">
+                            <div class="card-body">
+                                <h3>Campeonato Regional</h3>
+                                <p>Nossa equipe sub-13 se destacou no último campeonato regional, mostrando garra e talento. Confira os melhores momentos!</p>
+                                <span class="card-meta">22 de Agosto, 2025</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="side-column">
+                        <h2 class="section-title animated-element">Apoie nosso time</h2>
+                        <div class="card support-card animated-element">
+                             <h3>Faça uma Doação</h3>
+                             <p><strong>PIX (CNPJ):</strong><br> 02.533.223/0001-40</p>
+                             <button class="btn btn-secondary" onclick="copyPixKey('02533223000140')">
+                                 <i class="fas fa-copy"></i> Copiar Chave
+                             </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="sobre" class="page">
+                <h2 class="section-title animated-element">Nossa História</h2>
+                 <div class="card animated-element">
+                       <div class="card-body">
+                           <p>Fundado com a missão de oferecer oportunidades através do esporte, o Canário Esporte Clube já impactou a vida de centenas de jovens. Usamos o futebol como ferramenta de inclusão social e desenvolvimento pessoal.</p>
+                           <h3>Depoimentos</h3>
+                           <div class="testimonial animated-element">
+                               <blockquote>"Meu filho desenvolveu disciplina e autoconfiança. Sou imensamente grata a este projeto."</blockquote>
+                               <cite>- Mãe de Aluno</cite>
+                           </div>
+                       </div>
+                 </div>
+            </section>
+            
+            <section id="doacoes" class="page">
+                <h2 class="section-title animated-element">Como sua Doação Ajuda</h2>
+                <div class="card animated-element">
+                    <div class="card-body donation-page">
+                        <img src="./assets/qrcode-pix.png" alt="QR Code PIX">
+                        <p>Utilize o QR Code acima ou a chave PIX abaixo. 100% dos recursos são revertidos para a compra de materiais, uniformes e lanches para os atletas.</p>
+                        <div class="support-card">
+                            <h3>PIX (CNPJ): 02.533.223/0001-40</h3>
+                            <button class="btn btn-accent" onclick="copyPixKey('02533223000140')"><i class="fas fa-copy"></i> Copiar Chave</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="transparencia" class="page">
+                <h2 class="section-title animated-element">Portal da Transparência</h2>
+                 <div class="card animated-element">
+                     <div class="card-body">
+                         <p>Acesse nossos relatórios financeiros e de atividades. A confiança da comunidade é nosso maior patrimônio.</p>
+                         <ul class="document-list">
+                             <li><a href="#">Balanço Financeiro - 1º Semestre 2025 <i class="fas fa-download"></i></a></li>
+                             <li><a href="#">Prestação de Contas - Anual 2024 <i class="fas fa-download"></i></a></li>
+                             <li><a href="#">Relatório de Atividades - 1º Semestre 2025 <i class="fas fa-download"></i></a></li>
+                         </ul>
+                     </div>
+                 </div>
+            </section>
+
+            <section id="contato" class="page">
+                 <h2 class="section-title animated-element">Fale Conosco</h2>
+                 <div class="card animated-element">
+                     <div class="card-body">
+                         <form id="contactForm">
+                             <input type="text" id="name" name="name" placeholder="Seu nome" required>
+                             <input type="email" id="email" name="email" placeholder="Seu e-mail" required>
+                             <textarea id="message" name="message" rows="5" placeholder="Sua mensagem" required></textarea>
+                             <button type="submit" class="btn btn-primary">Enviar</button>
+                         </form>
+                         <div id="form-feedback"></div>
+                     </div>
+                 </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
