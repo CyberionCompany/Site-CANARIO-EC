@@ -13,9 +13,13 @@
     <div class="admin-container">
         <aside class="admin-sidebar">
             <div class="logo"><img src="../assets/logo.jpg" alt="Logo Canário EC"><h2>Admin</h2></div>
-            <nav class="admin-nav">
+            <nav id="admin-nav" class="admin-nav">
                 <ul>
-                    <li class="active"><a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                    <li data-target="dashboard" class="active"><a href="#dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                    <li data-target="documentos"><a href="#documentos"><i class="fas fa-file-alt"></i> Documentos</a></li>
+                    <li data-target="projetos"><a href="#projetos"><i class="fas fa-tasks"></i> Projetos</a></li>
+                    <li data-target="institucional"><a href="#institucional"><i class="fas fa-landmark"></i> Institucional</a></li>
+                    <li data-target="mensagens"><a href="#mensagens"><i class="fas fa-envelope"></i> Mensagens</a></li>
                 </ul>
             </nav>
             <div class="sidebar-footer">
@@ -25,11 +29,19 @@
 
         <main class="admin-main-content">
             <header class="admin-header">
-                <h1>Dashboard</h1>
+                <h1 id="page-title">Dashboard</h1>
                 <div class="admin-user"><span id="admin-email"></span><i class="fas fa-user-circle"></i></div>
             </header>
 
-            <section class="content-management">
+            <section id="dashboard-content" class="content-section active">
+                <div class="stat-cards">
+                    <div class="card"><h3>Documentos</h3><p class="stat-number" id="doc-count">0</p><span>Total Cadastrado</span></div>
+                    <div class="card"><h3>Projetos Ativos</h3><p class="stat-number" id="project-count">0</p><span>Em Execução</span></div>
+                    <div class="card"><h3>Mensagens</h3><p class="stat-number">0</p><span>Não Lidas</span></div>
+                </div>
+            </section>
+
+            <section id="documentos-content" class="content-section">
                 <div class="card">
                     <h2>Gerenciar Documentos</h2>
                     <form id="add-document-form" class="add-document-form">
@@ -41,23 +53,39 @@
                             <option value="Transparência">Transparência</option>
                             <option value="Prestação de Contas">Prestação de Contas</option>
                         </select>
-                        <button type="button" id="upload-btn" class="btn btn-secondary">Escolher Arquivo</button>
-                        <div id="file-info" class="file-info">Nenhum arquivo selecionado.</div>
+                        <button type="button" id="upload-doc-btn" class="btn btn-secondary">Escolher Arquivo</button>
+                        <div id="doc-file-info" class="file-info">Nenhum arquivo selecionado.</div>
                         <button type="submit" class="btn btn-primary">Salvar Documento</button>
                     </form>
-
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>Título</th>
-                                <th>Categoria</th>
-                                <th>Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody id="documents-table-body"></tbody>
-                    </table>
+                    <table class="data-table"><thead id="documentos-head"><tr><th>Título</th><th>Categoria</th><th>Ações</th></tr></thead><tbody id="documentos-table-body"></tbody></table>
                 </div>
             </section>
+            
+            <section id="projetos-content" class="content-section">
+                 <div class="card">
+                    <h2>Gerenciar Projetos</h2>
+                    <form id="add-project-form" class="add-project-form">
+                         <h3>Adicionar Novo Projeto</h3>
+                         <input type="text" id="project-title" placeholder="Título do Projeto" required>
+                         <textarea id="project-desc" placeholder="Breve descrição do projeto" rows="3" required></textarea>
+                         <select id="project-status" required>
+                            <option value="Em Execução">Em Execução</option>
+                            <option value="Concluído">Concluído</option>
+                         </select>
+                         <button type="submit" class="btn btn-primary">Salvar Projeto</button>
+                    </form>
+                    <table class="data-table"><thead id="projetos-head"><tr><th>Título</th><th>Status</th><th>Ações</th></tr></thead><tbody id="projetos-table-body"></tbody></table>
+                </div>
+            </section>
+
+             <section id="institucional-content" class="content-section">
+                <div class="card"><h2>Gerenciar Conteúdo Institucional</h2><p>Área para editar textos como "Quem Somos", "Missão", "Visão", "Valores" e informações da diretoria.</p></div>
+            </section>
+
+             <section id="mensagens-content" class="content-section">
+                <div class="card"><h2>Caixa de Entrada</h2><p>Aqui serão exibidas as mensagens enviadas pelo formulário de contato do site público.</p></div>
+            </section>
+
         </main>
     </div>
     <script type="module" src="dashboard.js"></script>
