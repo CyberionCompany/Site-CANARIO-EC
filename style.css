@@ -257,3 +257,39 @@ body.sidebar-open #overlay {
     .footer-links { display: flex; flex-direction: column; gap: 0.5rem; }
     .footer-links a { margin: 0; }
 }
+/* Adicionar ao final de style.css */
+
+/* Loader para seções dinâmicas */
+.loader-small {
+    display: block;
+    width: 28px;
+    height: 28px;
+    margin: 20px auto;
+    border: 4px solid var(--border-color);
+    border-radius: 50%;
+    border-top-color: var(--primary-color);
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Badge de status para projetos */
+.status-badge {
+    font-size: 0.8rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 12px;
+    color: white;
+    font-weight: 500;
+    margin-left: 0.5rem;
+    vertical-align: middle;
+}
+
+.status-badge.em-execução {
+    background-color: var(--primary-color);
+}
+
+.status-badge.concluído {
+    background-color: var(--text-muted);
+}
