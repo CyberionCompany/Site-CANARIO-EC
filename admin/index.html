@@ -3,30 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Painel Administrativo</title>
+    <title>Dashboard - Canário EC</title>
+    <script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
-<body class="login-body">
-    <div class="login-container">
-        <div class="login-box">
-            <img src="../assets/logo.jpg" alt="Logo Canário EC" class="login-logo">
-            <h2>Painel Administrativo</h2>
-            <p>Por favor, insira suas credenciais para continuar.</p>
-            <form id="loginForm">
-                <div class="input-group">
-                    <label for="email">E-mail</label>
-                    <input type="email" id="email" name="email" required>
+<body>
+    <div id="loader" class="loader-container"><div class="loader"></div></div>
+    <div class="admin-container">
+        <aside id="admin-sidebar" class="admin-sidebar">
+            <div class="logo"><img src="../assets/logo.jpg" alt="Logo Canário EC"><h2>Canário EC</h2></div>
+            <nav id="admin-nav" class="admin-nav">
+                <ul>
+                    <li data-target="dashboard" class="active"><a href="#dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                    <li data-target="documentos"><a href="#documentos"><i class="fas fa-file-alt"></i> Documentos</a></li>
+                    <li data-target="projetos"><a href="#projetos"><i class="fas fa-tasks"></i> Projetos</a></li>
+                    <li data-target="doacoes"><a href="#doacoes"><i class="fas fa-hand-holding-heart"></i> Doações</a></li>
+                    <li data-target="institucional"><a href="#institucional"><i class="fas fa-landmark"></i> Institucional</a></li>
+                    <li data-target="mensagens"><a href="#mensagens"><i class="fas fa-envelope"></i> Mensagens</a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <button id="logout-btn" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Sair</button>
+            </div>
+        </aside>
+
+        <div id="admin-overlay"></div>
+
+        <main class="admin-main-content">
+            <header class="admin-header">
+                <button id="admin-menu-toggle" class="menu-toggle-btn"><i class="fas fa-bars"></i></button>
+                <h1 id="page-title">Dashboard</h1>
+                <div class="admin-user"><span id="admin-email"></span><i class="fas fa-user-circle"></i></div>
+            </header>
+
+            <section id="dashboard-content" class="content-section active">
+                <div class="stat-cards-grid">
+                    <div class="stat-card"><div class="stat-icon icon-donations"><i class="fas fa-dollar-sign"></i></div><div class="stat-info"><p>Total Arrecadado</p><h3 id="donations-total">R$ 0,00</h3></div></div>
+                    <div class="stat-card"><div class="stat-icon icon-projects"><i class="fas fa-tasks"></i></div><div class="stat-info"><p>Projetos Ativos</p><h3 id="project-count">0</h3></div></div>
+                    <div class="stat-card"><div class="stat-icon icon-docs"><i class="fas fa-file-alt"></i></div><div class="stat-info"><p>Documentos</p><h3 id="doc-count">0</h3></div></div>
+                    <div class="stat-card"><div class="stat-icon icon-messages"><i class="fas fa-envelope"></i></div><div class="stat-info"><p>Mensagens</p><h3 id="message-count">0</h3></div></div>
                 </div>
-                <div class="input-group">
-                    <label for="password">Senha</label>
-                    <input type="password" id="password" name="password" required>
+                <div class="dashboard-grid">
+                    <div class="card chart-container full-width"><h3>Arrecadação nos Últimos 6 Meses</h3><div id="monthlyDonationsChartWrapper"><canvas id="monthlyDonationsChart"></canvas></div></div>
+                    <div class="card chart-container"><h3>Atividade Recente</h3><ul id="activity-feed" class="activity-feed"></ul></div>
+                    <div class="card chart-container"><h3>Documentos por Categoria</h3><div id="docCategoryChartWrapper"><canvas id="docCategoryChart"></canvas></div></div>
+                    <div class="card chart-container"><h3>Status dos Projetos</h3><div id="projectStatusChartWrapper"><canvas id="projectStatusChart"></canvas></div></div>
                 </div>
-                <button type="submit" class="btn">Entrar</button>
-                <p id="error-message" class="error-message"></p>
-            </form>
-            <a href="../index.html" class="back-to-site">Voltar para o site</a>
-        </div>
+            </section>
+            
+            <section id="documentos-content" class="content-section">
+                <div class="card"><h2><i class="fas fa-file-alt"></i> Gerenciar Documentos</h2><form id="add-document-form" class="add-form"><h3>Adicionar Novo Documento</h3><input type="text" id="doc-title" placeholder="Título do Documento" required><select id="doc-category" required><option value="">Selecione a Categoria</option><option value="Institucional">Institucional</option><option value="Transparência">Transparência</option><option value="Prestação de Contas">Prestação de Contas</option></select><button type="button" id="upload-doc-btn" class="btn btn-secondary"><i class="fas fa-upload"></i> Escolher Arquivo</button><div id="doc-file-info" class="file-info">Nenhum arquivo selecionado.</div><button type="submit" id="doc-submit-btn" class="btn btn-primary" disabled><i class="fas fa-save"></i> Salvar Documento</button></form><table class="data-table"><thead><tr><th>Título</th><th>Categoria</th><th>Ações</th></tr></thead><tbody id="documentos-table-body"></tbody></table></div>
+            </section>
+            
+            <section id="projetos-content" class="content-section">
+                 <div class="card"><h2><i class="fas fa-tasks"></i> Gerenciar Projetos</h2><form id="add-project-form" class="add-form"><h3>Adicionar Novo Projeto</h3><input type="text" id="project-title" placeholder="Título do Projeto" required><textarea id="project-desc" placeholder="Breve descrição do projeto" rows="3" required></textarea><select id="project-status" required><option value="Em Execução">Em Execução</option><option value="Concluído">Concluído</option></select><button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Salvar Projeto</button></form><table class="data-table"><thead><tr><th>Título</th><th>Status</th><th>Ações</th></tr></thead><tbody id="projetos-table-body"></tbody></table></div>
+            </section>
+
+            <section id="doacoes-content" class="content-section">
+                <div class="card"><h2><i class="fas fa-hand-holding-heart"></i> Gerenciar Doações</h2><form id="add-doacao-form" class="add-form"><h3>Registrar Nova Doação</h3><input type="text" id="doacao-doador" placeholder="Nome do Doador (Opcional)"><input type="number" id="doacao-valor" placeholder="Valor (Ex: 50.00)" step="0.01" required><input type="date" id="doacao-data" required><button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Registrar Doação</button></form><table class="data-table"><thead><tr><th>Doador</th><th>Valor</th><th>Data</th><th>Ações</th></tr></thead><tbody id="doacoes-table-body"></tbody></table></div>
+            </section>
+
+            <section id="institucional-content" class="content-section">
+                <div class="card"><h2><i class="fas fa-landmark"></i> Gerenciar Conteúdo Institucional</h2><p>Altere os textos abaixo. Eles serão exibidos na seção "Institucional" do site público.</p><form id="institucional-form" class="content-form"><label for="inst-missao">Missão</label><textarea id="inst-missao" rows="4"></textarea><label for="inst-visao">Visão e Valores</label><textarea id="inst-visao" rows="4"></textarea><label for="inst-diretoria">Diretoria e Conselhos</label><textarea id="inst-diretoria" rows="4" placeholder="Ex: Presidente: Nome (Voluntário)"></textarea><button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Salvar Alterações</button></form></div>
+            </section>
+
+            <section id="mensagens-content" class="content-section">
+                <div class="card"><h2><i class="fas fa-envelope"></i> Caixa de Entrada</h2><p>Mensagens enviadas pelo formulário de contato do site público.</p><table class="data-table"><thead><tr><th>Remetente</th><th>E-mail</th><th>Data</th><th>Ações</th></tr></thead><tbody id="mensagens-table-body"></tbody></table></div>
+            </section>
+        </main>
     </div>
-    <script type="module" src="auth.js"></script>
+
+    <div id="message-modal" class="modal"><div class="modal-content"><span class="modal-close-btn">&times;</span><h3 id="modal-sender"></h3><p><strong id="modal-email"></strong> - <em id="modal-date"></em></p><hr><p id="modal-message-body"></p></div></div>
+    <div id="edit-document-modal" class="modal"><div class="modal-content"><span class="modal-close-btn">&times;</span><h3>Editar Documento</h3><form id="edit-document-form" class="modal-form"><input type="hidden" id="edit-doc-id"><label for="edit-doc-title">Título</label><input type="text" id="edit-doc-title" required><label for="edit-doc-category">Categoria</label><select id="edit-doc-category" required><option value="Institucional">Institucional</option><option value="Transparência">Transparência</option><option value="Prestação de Contas">Prestação de Contas</option></select><p class="modal-note"><i class="fas fa-info-circle"></i> O arquivo do documento não pode ser alterado.</p><div class="modal-actions"><button type="button" class="btn btn-secondary modal-cancel-btn">Cancelar</button><button type="submit" class="btn btn-primary">Salvar Alterações</button></div></form></div></div>
+    <div id="edit-project-modal" class="modal"><div class="modal-content"><span class="modal-close-btn">&times;</span><h3>Editar Projeto</h3><form id="edit-project-form" class="modal-form"><input type="hidden" id="edit-project-id"><label for="edit-project-title">Título</label><input type="text" id="edit-project-title" required><label for="edit-project-desc">Descrição</label><textarea id="edit-project-desc" rows="4" required></textarea><label for="edit-project-status">Status</label><select id="edit-project-status" required><option value="Em Execução">Em Execução</option><option value="Concluído">Concluído</option></select><div class="modal-actions"><button type="button" class="btn btn-secondary modal-cancel-btn">Cancelar</button><button type="submit" class="btn btn-primary">Salvar Alterações</button></div></form></div></div>
+    
+    <script type="module" src="dashboard.js"></script>
 </body>
 </html>
