@@ -12,7 +12,7 @@
 <body>
     <div id="loader" class="loader-container"><div class="loader"></div></div>
     <div class="admin-container">
-        <aside class="admin-sidebar">
+        <aside id="admin-sidebar" class="admin-sidebar">
             <div class="logo"><img src="../assets/logo.jpg" alt="Logo Canário EC"><h2>Admin</h2></div>
             <nav id="admin-nav" class="admin-nav">
                 <ul>
@@ -28,8 +28,13 @@
             </div>
         </aside>
 
+        <div id="admin-overlay"></div>
+
         <main class="admin-main-content">
             <header class="admin-header">
+                <button id="admin-menu-toggle" class="menu-toggle-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
                 <h1 id="page-title">Dashboard</h1>
                 <div class="admin-user"><span id="admin-email"></span><i class="fas fa-user-circle"></i></div>
             </header>

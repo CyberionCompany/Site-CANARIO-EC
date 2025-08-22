@@ -6,7 +6,7 @@
     --shadow: 0 4px 6px rgba(0, 0, 0, 0.05); --danger-color: #dc3545;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Inter', sans-serif; background-color: var(--bg-color); color: var(--text-color); }
+body { font-family: 'Inter', sans-serif; background-color: var(--bg-color); color: var(--text-color); overflow-x: hidden; }
 
 /* --- PÁGINA DE LOGIN --- */
 .login-body { display: flex; justify-content: center; align-items: center; height: 100vh; }
@@ -25,7 +25,7 @@ body { font-family: 'Inter', sans-serif; background-color: var(--bg-color); colo
 
 /* --- LAYOUT DO DASHBOARD --- */
 .admin-container { display: flex; }
-.admin-sidebar { width: 260px; background-color: var(--sidebar-bg); border-right: 1px solid var(--border-color); height: 100vh; position: fixed; display: flex; flex-direction: column; padding: 1.5rem; }
+.admin-sidebar { width: 260px; background-color: var(--sidebar-bg); border-right: 1px solid var(--border-color); height: 100vh; position: fixed; top: 0; left: 0; z-index: 1000; display: flex; flex-direction: column; padding: 1.5rem; transition: transform 0.3s ease-in-out; }
 .admin-sidebar .logo { display: flex; align-items: center; margin-bottom: 2.5rem; }
 .admin-sidebar .logo img { width: 45px; height: 45px; border-radius: 8px; margin-right: 1rem; }
 .admin-sidebar .logo h2 { font-size: 1.5rem; }
@@ -35,24 +35,23 @@ body { font-family: 'Inter', sans-serif; background-color: var(--bg-color); colo
 .admin-nav li.active a, .admin-nav li a:hover { background-color: var(--primary-color); color: white; }
 .admin-sidebar .sidebar-footer { margin-top: auto; }
 .logout-btn { background: #f8f9fa; color: var(--danger-color); text-decoration: none; display: block; text-align: center; padding: 0.8rem; border-radius: 8px; font-weight: 600; width: 100%; border: none; font-size: 1rem; cursor: pointer; }
-.admin-main-content { margin-left: 260px; width: calc(100% - 260px); padding: 2rem; }
+.admin-main-content { margin-left: 260px; width: calc(100% - 260px); padding: 2rem; transition: margin-left 0.3s ease-in-out; }
 .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
 .admin-user { display: flex; align-items: center; gap: 1rem; font-size: 1.2rem; }
 
-/* --- COMPONENTES DO DASHBOARD --- */
+/* --- COMPONENTES --- */
 .card { background: var(--card-bg); border-radius: 12px; padding: 1.5rem; box-shadow: var(--shadow); }
 .content-section { display: none; }
 .content-section.active { display: block; animation: fadeIn 0.5s; }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-.stat-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
-.stat-cards .card h3 { font-size: 1rem; color: var(--text-muted); font-weight: 500; }
-.stat-number { font-size: 2.5rem; font-weight: 700; margin: 0.5rem 0; }
-
-.add-document-form, .add-project-form { background: var(--bg-color); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--border-color); margin-bottom: 2rem; display: flex; flex-direction: column; gap: 1rem; }
+.add-document-form, .add-project-form, .content-form { background: var(--bg-color); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--border-color); margin-bottom: 2rem; display: flex; flex-direction: column; gap: 1rem; }
 .add-document-form h3, .add-project-form h3 { margin-bottom: 0; }
-.add-document-form input, .add-document-form select, .add-project-form input, .add-project-form select, .add-project-form textarea { width: 100%; padding: 0.8rem 1rem; border: 1px solid var(--border-color); border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 1rem; }
-.add-project-form textarea { resize: vertical; }
+.add-document-form input, .add-document-form select, .add-project-form input, .add-project-form select, .add-project-form textarea, .content-form textarea { width: 100%; padding: 0.8rem 1rem; border: 1px solid var(--border-color); border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 1rem; }
+.add-project-form textarea, .content-form textarea { resize: vertical; min-height: 120px; }
+.content-form { gap: 1.5rem; margin-top: 2rem; }
+.content-form label { font-weight: 600; margin-bottom: -1rem; }
+.content-form .btn-primary { max-width: 250px; align-self: flex-start; }
 
 .btn-secondary { background-color: #6c757d; color: white; }
 .btn-secondary:hover { background-color: #5a6268; }
@@ -70,90 +69,47 @@ body { font-family: 'Inter', sans-serif; background-color: var(--bg-color); colo
 .loader-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(255, 255, 255, 0.8); display: flex; justify-content: center; align-items: center; z-index: 9999; }
 .loader { border: 8px solid #f3f3f3; border-radius: 50%; border-top: 8px solid var(--primary-color); width: 60px; height: 60px; animation: spin 1s linear infinite; }
 @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-/* Adicionar ao final de admin/style.css */
 
-/* Formulário de conteúdo institucional */
-.content-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    margin-top: 2rem;
-}
-.content-form label {
-    font-weight: 600;
-    margin-bottom: -1rem;
-}
-.content-form textarea {
-    width: 100%;
-    padding: 0.8rem 1rem;
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    font-family: 'Inter', sans-serif;
-    font-size: 1rem;
-    resize: vertical;
-    min-height: 120px;
-}
-.content-form .btn-primary {
-    max-width: 250px;
-    align-self: flex-start;
-}
-
-/* Modal de Mensagem */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1001;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0,0,0,0.6);
-}
-.modal-content {
-    background-color: #fefefe;
-    margin: 15% auto;
-    padding: 2rem;
-    border: 1px solid #888;
-    width: 80%;
-    max-width: 600px;
-    border-radius: 12px;
-    position: relative;
-    animation: fadeIn 0.3s;
-}
-.modal-close-btn {
-    color: #aaa;
-    position: absolute;
-    top: 1rem;
-    right: 1.5rem;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
-}
+.modal { display: none; position: fixed; z-index: 1001; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.6); }
+.modal-content { background-color: #fefefe; margin: 15% auto; padding: 2rem; border: 1px solid #888; width: 80%; max-width: 600px; border-radius: 12px; position: relative; animation: fadeIn 0.3s; }
+.modal-close-btn { color: #aaa; position: absolute; top: 1rem; right: 1.5rem; font-size: 28px; font-weight: bold; cursor: pointer; }
 .modal-content h3 { margin-bottom: 0.5rem; }
 .modal-content hr { margin: 1rem 0; border: 0; border-top: 1px solid var(--border-color); }
 .modal-content p { line-height: 1.6; }
-/* Adicionar ao final de admin/style.css, se não estiver lá */
 
-/* Grid para os Gráficos do Dashboard */
-.charts-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
+.charts-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+.chart-container { padding: 1.5rem; position: relative; height: 350px; }
+.chart-container.full-width { grid-column: 1 / -1; }
+
+/* --- RESPONSIVIDADE --- */
+.menu-toggle-btn { display: none; background: none; border: none; cursor: pointer; font-size: 1.5rem; color: var(--text-color); }
+#admin-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 999; opacity: 0; transition: opacity 0.3s; visibility: hidden; }
+body.sidebar-open #admin-overlay { display: block; opacity: 1; visibility: visible; }
+
+@media (max-width: 1024px) {
+    .admin-sidebar { transform: translateX(-100%); }
+    body.sidebar-open .admin-sidebar { transform: translateX(0); }
+    .admin-main-content { margin-left: 0; width: 100%; }
+    .menu-toggle-btn { display: block; }
+    .admin-header { justify-content: start; gap: 1.5rem; }
+    .admin-user { margin-left: auto; }
 }
 
 @media (min-width: 992px) {
-    .charts-grid {
-        grid-template-columns: 1fr 1fr;
-    }
+    .charts-grid { grid-template-columns: 1fr 1fr; }
 }
 
-.chart-container {
-    padding: 1.5rem;
-    position: relative;
-    height: 350px; /* Altura fixa para os containers dos gráficos */
-}
+@media (max-width: 768px) {
+    .admin-main-content { padding: 1rem; }
+    .charts-grid, .stat-cards { grid-template-columns: 1fr; }
+    .admin-header h1 { font-size: 1.5rem; }
+    .admin-user span { display: none; }
 
-.chart-container.full-width {
-    grid-column: 1 / -1; /* Ocupa a largura toda em telas maiores */
+    /* Transformação da Tabela para Cards */
+    .data-table thead { display: none; }
+    .data-table tr { display: block; background: var(--card-bg); border-radius: 8px; padding: 1rem; margin-bottom: 1rem; box-shadow: var(--shadow); }
+    .data-table td { display: block; text-align: right; border-bottom: 1px solid var(--border-color); padding: 0.8rem 0.5rem; }
+    .data-table td:last-child { border-bottom: none; }
+    .data-table td::before { content: attr(data-label); float: left; font-weight: 600; color: var(--text-color); }
+    .data-table .actions { display: flex; justify-content: flex-end; }
 }

@@ -21,9 +21,10 @@ function initializePanel(user) {
     setupEventListeners();
 }
 
-// --- AUTENTICAÇÃO E NAVEGAÇÃO ---
+// --- AUTENTICAÇÃO ---
 onAuthStateChanged(auth, (user) => user ? initializePanel(user) : window.location.href = 'index.html');
 
+// --- NAVEGAÇÃO ---
 function handleRouteChange() {
     const hash = window.location.hash || '#dashboard';
     const targetId = hash.substring(1);
@@ -57,7 +58,6 @@ async function updateDashboardView() {
         getDocs(collection(db, "contatos"))
     ]);
 
-    // Processa dados para o gráfico de categorias de documentos
     const docCategories = {};
     docsSnap.forEach(doc => {
         const category = doc.data().category || "Sem Categoria";
@@ -65,7 +65,6 @@ async function updateDashboardView() {
     });
     renderDocCategoryChart(Object.keys(docCategories), Object.values(docCategories));
 
-    // Processa dados para o gráfico de status de projetos
     const projectStatus = { "Em Execução": 0, "Concluído": 0 };
     projectsSnap.forEach(doc => {
         const status = doc.data().status;
@@ -73,7 +72,6 @@ async function updateDashboardView() {
     });
     renderProjectStatusChart(Object.keys(projectStatus), Object.values(projectStatus));
     
-    // Processa dados para o gráfico de atividade mensal
     const monthlyActivity = {};
     const sixMonthsAgo = new Date();
     sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 5);
@@ -96,37 +94,31 @@ async function updateDashboardView() {
     renderMonthlyActivityChart(activityLabels, activityData);
 }
 
-// --- FUNÇÕES DE RENDERIZAÇÃO DOS GRÁFICOS (MÉTODO ROBUSTO) ---
+// --- FUNÇÕES DE RENDERIZAÇÃO DOS GRÁFICOS ---
 function renderDocCategoryChart(labels, data) {
     const wrapper = document.getElementById('docCategoryChartWrapper');
-    wrapper.innerHTML = '<canvas id="docCategoryChart"></canvas>'; // Recria o canvas
+    wrapper.innerHTML = '<canvas id="docCategoryChart"></canvas>';
     const ctx = document.getElementById('docCategoryChart').getContext('2d');
     new Chart(ctx, {
-        type: 'doughnut',
-        data: { labels, datasets: [{ data, backgroundColor: ['#0a6a0a', '#ffdd00', '#343A40', '#6C757D'], hoverOffset: 4 }] },
-        options: { responsive: true, maintainAspectRatio: false }
+        type: 'doughnut', data: { labels, datasets: [{ data, backgroundColor: ['#0a6a0a', '#ffdd00', '#343A40', '#6C757D'], hoverOffset: 4 }] }, options: { responsive: true, maintainAspectRatio: false }
     });
 }
 
 function renderProjectStatusChart(labels, data) {
     const wrapper = document.getElementById('projectStatusChartWrapper');
-    wrapper.innerHTML = '<canvas id="projectStatusChart"></canvas>'; // Recria o canvas
+    wrapper.innerHTML = '<canvas id="projectStatusChart"></canvas>';
     const ctx = document.getElementById('projectStatusChart').getContext('2d');
     new Chart(ctx, {
-        type: 'pie',
-        data: { labels, datasets: [{ data, backgroundColor: ['#0a6a0a', '#ffdd00'], hoverOffset: 4 }] },
-        options: { responsive: true, maintainAspectRatio: false }
+        type: 'pie', data: { labels, datasets: [{ data, backgroundColor: ['#0a6a0a', '#ffdd00'], hoverOffset: 4 }] }, options: { responsive: true, maintainAspectRatio: false }
     });
 }
 
 function renderMonthlyActivityChart(labels, data) {
     const wrapper = document.getElementById('monthlyActivityChartWrapper');
-    wrapper.innerHTML = '<canvas id="monthlyActivityChart"></canvas>'; // Recria o canvas
+    wrapper.innerHTML = '<canvas id="monthlyActivityChart"></canvas>';
     const ctx = document.getElementById('monthlyActivityChart').getContext('2d');
     new Chart(ctx, {
-        type: 'bar',
-        data: { labels, datasets: [{ label: 'Novos Itens Cadastrados', data, backgroundColor: '#0a6a0a' }] },
-        options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } } }
+        type: 'bar', data: { labels, datasets: [{ label: 'Novos Itens Cadastrados', data, backgroundColor: '#0a6a0a' }] }, options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } } }
     });
 }
 
@@ -140,7 +132,7 @@ const fetchAndRenderDocuments = async () => {
     const tbody = document.getElementById('documentos-table-body');
     renderTable(tbody, await getDocs(collection(db, "documentos")), doc => {
         const data = doc.data();
-        return `<tr><td><a href="${data.fileURL}" target="_blank">${data.title}</a></td><td>${data.category}</td><td class="actions"><button class="btn-icon btn-danger delete-btn" data-type="documento" data-id="${doc.id}"><i class="fas fa-trash"></i></button></td></tr>`;
+        return `<tr><td data-label="Título"><a href="${data.fileURL}" target="_blank">${data.title}</a></td><td data-label="Categoria">${data.category}</td><td data-label="Ações" class="actions"><button class="btn-icon btn-danger delete-btn" data-type="documento" data-id="${doc.id}"><i class="fas fa-trash"></i></button></td></tr>`;
     });
 };
 
@@ -148,7 +140,7 @@ const fetchAndRenderProjects = async () => {
     const tbody = document.getElementById('projetos-table-body');
     renderTable(tbody, await getDocs(collection(db, "projetos")), doc => {
         const data = doc.data();
-        return `<tr><td>${data.title}</td><td>${data.status}</td><td class="actions"><button class="btn-icon btn-danger delete-btn" data-type="projeto" data-id="${doc.id}"><i class="fas fa-trash"></i></button></td></tr>`;
+        return `<tr><td data-label="Título">${data.title}</td><td data-label="Status">${data.status}</td><td data-label="Ações" class="actions"><button class="btn-icon btn-danger delete-btn" data-type="projeto" data-id="${doc.id}"><i class="fas fa-trash"></i></button></td></tr>`;
     });
 };
 
@@ -157,7 +149,7 @@ const fetchAndRenderMensagens = async () => {
     renderTable(tbody, await getDocs(collection(db, "contatos")), doc => {
         const data = doc.data();
         const date = new Date(data.data).toLocaleDateString('pt-BR');
-        return `<tr><td>${data.nome}</td><td>${data.email}</td><td>${date}</td><td class="actions">
+        return `<tr><td data-label="Remetente">${data.nome}</td><td data-label="E-mail">${data.email}</td><td data-label="Data">${date}</td><td data-label="Ações" class="actions">
             <button class="btn-icon view-btn" data-nome="${data.nome}" data-email="${data.email}" data-data="${date}" data-mensagem="${data.mensagem}"><i class="fas fa-eye"></i></button>
             <button class="btn-icon btn-danger delete-btn" data-type="mensagem" data-id="${doc.id}"><i class="fas fa-trash"></i></button>
         </td></tr>`;
@@ -178,8 +170,19 @@ const loadInstitucionalContent = async () => {
 
 // --- FUNÇÃO PARA CONFIGURAR TODOS OS EVENT LISTENERS ---
 function setupEventListeners() {
-    document.getElementById('logout-btn').addEventListener('click', () => signOut(auth).then(() => window.location.href = 'index.html'));
+    // CORREÇÃO: LÓGICA DO MENU RESPONSIVO MOVIDA PARA CÁ
+    const menuToggle = document.getElementById('admin-menu-toggle');
+    const overlay = document.getElementById('admin-overlay');
+    const navLinks = document.querySelectorAll('#admin-nav a');
+    const closeMenu = () => document.body.classList.remove('sidebar-open');
+    menuToggle.addEventListener('click', () => document.body.classList.toggle('sidebar-open'));
+    overlay.addEventListener('click', closeMenu);
+    navLinks.forEach(link => link.addEventListener('click', closeMenu));
 
+    // Listener de Logout
+    document.getElementById('logout-btn').addEventListener('click', () => signOut(auth).then(() => window.location.href = 'index.html'));
+    
+    // Listener do botão de Upload de Documento
     const docSubmitBtn = document.getElementById('doc-submit-btn');
     document.getElementById('upload-doc-btn').addEventListener('click', () => {
         const dialog = uploadcare.openDialog(null, { publicKey: UPLOADCARE_PUBLIC_KEY, tabs: 'file url', locale: 'pt' });
@@ -190,6 +193,7 @@ function setupEventListeners() {
         }));
     });
 
+    // Listener do formulário de Documentos
     document.getElementById('add-document-form').addEventListener('submit', async (e) => {
         e.preventDefault();
         const form = e.target;
@@ -206,6 +210,7 @@ function setupEventListeners() {
         finally { loader.style.display = 'none'; }
     });
 
+    // Listener do formulário de Projetos
     document.getElementById('add-project-form').addEventListener('submit', async (e) => {
         e.preventDefault();
         const form = e.target;
@@ -218,6 +223,7 @@ function setupEventListeners() {
         finally { loader.style.display = 'none'; }
     });
     
+    // Listener do formulário de Conteúdo Institucional
     const institucionalForm = document.getElementById('institucional-form');
     institucionalForm.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -230,6 +236,7 @@ function setupEventListeners() {
         finally { loader.style.display = 'none'; }
     });
     
+    // Listener genérico para ações (Excluir, Visualizar)
     document.body.addEventListener('click', async (e) => {
         const target = e.target.closest('.delete-btn, .view-btn, .modal-close-btn, .modal');
         if (!target) return;
