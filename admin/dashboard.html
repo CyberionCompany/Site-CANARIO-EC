@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Canário EC</title>
+    <script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+    <div id="loader" class="loader-container"><div class="loader"></div></div>
+    <div class="admin-container">
+        <aside class="admin-sidebar">
+            <div class="logo"><img src="../assets/logo.jpg" alt="Logo Canário EC"><h2>Admin</h2></div>
+            <nav class="admin-nav">
+                <ul>
+                    <li class="active"><a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <button id="logout-btn" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Sair</button>
+            </div>
+        </aside>
+
+        <main class="admin-main-content">
+            <header class="admin-header">
+                <h1>Dashboard</h1>
+                <div class="admin-user"><span id="admin-email"></span><i class="fas fa-user-circle"></i></div>
+            </header>
+
+            <section class="content-management">
+                <div class="card">
+                    <h2>Gerenciar Documentos</h2>
+                    <form id="add-document-form" class="add-document-form">
+                        <h3>Adicionar Novo Documento</h3>
+                        <input type="text" id="doc-title" placeholder="Título do Documento" required>
+                        <select id="doc-category" required>
+                            <option value="">Selecione a Categoria</option>
+                            <option value="Institucional">Institucional</option>
+                            <option value="Transparência">Transparência</option>
+                            <option value="Prestação de Contas">Prestação de Contas</option>
+                        </select>
+                        <button type="button" id="upload-btn" class="btn btn-secondary">Escolher Arquivo</button>
+                        <div id="file-info" class="file-info">Nenhum arquivo selecionado.</div>
+                        <button type="submit" class="btn btn-primary">Salvar Documento</button>
+                    </form>
+
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Título</th>
+                                <th>Categoria</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="documents-table-body"></tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script type="module" src="dashboard.js"></script>
+</body>
+</html>
