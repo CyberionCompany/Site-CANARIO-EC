@@ -3,11 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Canário Esporte Clube - Site Oficial</title>
+    <title>Canário Esporte Clube - Gestão e Transparência</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
+    <a href="https://wa.me/5500000000000" class="whatsapp-float" target="_blank" title="Fale Conosco no WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+    
     <div class="container">
         <aside class="sidebar">
             <div class="logo">
@@ -18,9 +22,11 @@
                 <h3>Menu</h3>
                 <ul>
                     <li class="active"><a href="#home"><i class="fas fa-home"></i> Início</a></li>
-                    <li><a href="#sobre"><i class="fas fa-info-circle"></i> Sobre Nós</a></li>
-                    <li><a href="#doacoes"><i class="fas fa-hand-holding-heart"></i> Doações</a></li>
-                    <li><a href="#transparencia"><i class="fas fa-file-invoice"></i> Transparência</a></li>
+                    <li><a href="#institucional"><i class="fas fa-landmark"></i> Institucional</a></li>
+                    <li><a href="#transparencia"><i class="fas fa-search-dollar"></i> Transparência</a></li>
+                    <li><a href="#prestacao-contas"><i class="fas fa-file-invoice-dollar"></i> Prestação de Contas</a></li>
+                    <li><a href="#projetos"><i class="fas fa-tasks"></i> Projetos</a></li>
+                    <li><a href="#doacoes"><i class="fas fa-hand-holding-heart"></i> Doações e Patrocínios</a></li>
                     <li><a href="#contato"><i class="fas fa-envelope"></i> Contato</a></li>
                 </ul>
             </nav>
@@ -33,17 +39,13 @@
 
         <main class="main-content">
             <header class="main-header">
-                <button id="menu-toggle" class="menu-toggle-btn">
-                    <i class="fas fa-bars"></i>
-                </button>
-
+                <button id="menu-toggle" class="menu-toggle-btn"><i class="fas fa-bars"></i></button>
                 <div class="search-bar">
                     <i class="fas fa-search"></i>
                     <input type="text" placeholder="Buscar no site...">
                 </div>
                 <div class="user-profile">
-                    <i class="far fa-bell"></i>
-                    <i class="far fa-user-circle"></i>
+                    <a href="/admin" title="Painel Administrativo"><i class="fas fa-user-shield"></i></a>
                     <span>Visitante</span>
                 </div>
             </header>
@@ -51,93 +53,187 @@
             <section id="home" class="page active">
                 <div class="hero-card animated-element">
                     <div class="hero-text">
-                        <h1>Transforme Vidas Através do Esporte</h1>
-                        <p>Sua contribuição ajuda crianças a realizarem sonhos e a construírem um futuro melhor.</p>
-                        <a href="#doacoes" class="btn btn-accent">Doe Agora via PIX <i class="fas fa-arrow-right"></i></a>
+                        <h1>Ajude uma criança a realizar um sonho através do esporte</h1>
+                        <p>Sua doação transforma vidas, oferecendo oportunidades, disciplina e um futuro melhor para jovens da nossa comunidade.</p>
+                        <a href="#doacoes" class="btn btn-accent">Doe Agora <i class="fas fa-arrow-right"></i></a>
                     </div>
                 </div>
-                
                 <div class="content-grid">
-                    <div class="main-column">
-                        <h2 class="section-title animated-element">Últimas Notícias</h2>
-                        <div class="card animated-element">
-                            <img src="./assets/criancas.png" class="card-img-top" alt="Crianças jogando futebol">
-                            <div class="card-body">
-                                <h3>Campeonato Regional</h3>
-                                <p>Nossa equipe sub-13 se destacou no último campeonato regional, mostrando garra e talento. Confira os melhores momentos!</p>
-                                <span class="card-meta">22 de Agosto, 2025</span>
-                            </div>
+                    <div class="card animated-element">
+                        <div class="card-body">
+                            <h3>Acesso Rápido</h3>
+                            <ul class="document-list">
+                                <li><a href="#transparencia">Portal da Transparência <i class="fas fa-chevron-right"></i></a></li>
+                                <li><a href="#prestacao-contas">Prestação de Contas <i class="fas fa-chevron-right"></i></a></li>
+                            </ul>
                         </div>
                     </div>
-                    <div class="side-column">
-                        <h2 class="section-title animated-element">Apoie nosso time</h2>
-                        <div class="card support-card animated-element">
-                             <h3>Faça uma Doação</h3>
-                             <p><strong>PIX (CNPJ):</strong><br> 02.533.223/0001-40</p>
-                             <button class="btn btn-secondary" onclick="copyPixKey('02533223000140')">
-                                 <i class="fas fa-copy"></i> Copiar Chave
-                             </button>
-                        </div>
+                    <div class="card support-card animated-element">
+                        <h3>Faça uma Doação Rápida</h3>
+                        <p><strong>PIX (CNPJ):</strong><br> 02.533.223/0001-40</p>
+                        <button class="btn btn-secondary" onclick="copyPixKey('02533223000140')">
+                            <i class="fas fa-copy"></i> Copiar Chave
+                        </button>
                     </div>
                 </div>
             </section>
 
-            <section id="sobre" class="page">
-                <h2 class="section-title animated-element">Nossa História</h2>
-                 <div class="card animated-element">
-                       <div class="card-body">
-                           <p>Fundado com a missão de oferecer oportunidades através do esporte, o Canário Esporte Clube já impactou a vida de centenas de jovens. Usamos o futebol como ferramenta de inclusão social e desenvolvimento pessoal.</p>
-                           <h3>Depoimentos</h3>
-                           <div class="testimonial animated-element">
-                               <blockquote>"Meu filho desenvolveu disciplina e autoconfiança. Sou imensamente grata a este projeto."</blockquote>
-                               <cite>- Mãe de Aluno</cite>
-                           </div>
-                       </div>
-                 </div>
-            </section>
-            
-            <section id="doacoes" class="page">
-                <h2 class="section-title animated-element">Como sua Doação Ajuda</h2>
+            <section id="institucional" class="page">
+                <h2 class="section-title">Institucional</h2>
                 <div class="card animated-element">
-                    <div class="card-body donation-page">
-                        <img src="./assets/qrcode-pix.png" alt="QR Code PIX">
-                        <p>Utilize o QR Code acima ou a chave PIX abaixo. 100% dos recursos são revertidos para a compra de materiais, uniformes e lanches para os atletas.</p>
-                        <div class="support-card">
-                            <h3>PIX (CNPJ): 02.533.223/0001-40</h3>
-                            <button class="btn btn-accent" onclick="copyPixKey('02533223000140')"><i class="fas fa-copy"></i> Copiar Chave</button>
-                        </div>
+                    <div class="card-body">
+                        <h4>Nossa Missão</h4>
+                        <p>Usar o esporte como ferramenta de inclusão social e desenvolvimento humano, oferecendo um ambiente seguro e inspirador para crianças e jovens.</p>
+                        <h4>Nossa Visão e Valores</h4>
+                        <p>Ser referência na formação de cidadãos conscientes e atletas dedicados, pautados pela disciplina, respeito, trabalho em equipe e total transparência em nossas ações.</p>
+                        <h4>Diretoria e Conselhos (Mandato 2024-2026)</h4>
+                        <p><strong>Presidente:</strong> Nome do Presidente (Voluntário)<br><strong>Vice-Presidente:</strong> Nome do Vice (Voluntário)<br><strong>Conselho Fiscal:</strong> Membro 1, Membro 2, Membro 3 (Voluntários)</p>
+                        <h4>Documentos Oficiais</h4>
+                        <ul class="document-list">
+                            <li><a href="#" target="_blank">Estatuto Social <i class="fas fa-download"></i></a></li>
+                            <li><a href="#" target="_blank">Ata da Última Assembleia <i class="fas fa-download"></i></a></li>
+                            <li><a href="#" target="_blank">Certidão de Regularidade do FGTS <i class="fas fa-download"></i></a></li>
+                            <li><a href="#" target="_blank">Certidão Negativa de Débitos (Receita Federal) <i class="fas fa-download"></i></a></li>
+                        </ul>
                     </div>
                 </div>
             </section>
 
             <section id="transparencia" class="page">
-                <h2 class="section-title animated-element">Portal da Transparência</h2>
+                <h2 class="section-title">Portal da Transparência</h2>
+                <div class="card animated-element">
+                    <div class="card-body">
+                        <h4>Recursos Públicos Recebidos</h4>
+                        <p>Aqui listamos todas as emendas parlamentares, convênios e termos de fomento recebidos, em conformidade com a legislação vigente.</p>
+                        <ul class="document-list">
+                            <li><a href="#" target="_blank">Emenda Parlamentar 2025 - Dep. Exemplo (R$ 50.000,00) <i class="fas fa-download"></i></a></li>
+                            <li><a href="#" target="_blank">Termo de Fomento Municipal N° 123/2024 <i class="fas fa-download"></i></a></li>
+                        </ul>
+                         <h4>Empresas Contratadas</h4>
+                        <p>Relação de fornecedores e prestadores de serviço contratados para execução de nossos projetos.</p>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Empresa (CNPJ)</th>
+                                    <th>Objeto do Contrato</th>
+                                    <th>Valor</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Fornecedor de Material Esportivo LTDA (12.345.678/0001-99)</td>
+                                    <td>Compra de 50 bolas de futebol</td>
+                                    <td>R$ 2.500,00</td>
+                                </tr>
+                                 <tr>
+                                    <td>Transporte e Cia (87.654.321/0001-00)</td>
+                                    <td>Locação de ônibus para campeonato</td>
+                                    <td>R$ 1.200,00</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="prestacao-contas" class="page">
+                <h2 class="section-title">Prestação de Contas</h2>
+                <div class="card animated-element">
+                    <div class="card-body">
+                        <h4>Execução Financeira e Física</h4>
+                        <p>Acesse os comprovantes, notas fiscais e relatórios que detalham a aplicação dos recursos e as atividades realizadas.</p>
+                        <ul class="document-list">
+                             <li><a href="#" target="_blank">Relatório Financeiro - 1º Semestre 2025 <i class="fas fa-download"></i></a></li>
+                             <li><a href="#" target="_blank">Relatório de Atividades - 1º Semestre 2025 <i class="fas fa-download"></i></a></li>
+                             <li><a href="#" target="_blank">Galeria de Fotos do Campeonato Regional <i class="fas fa-camera"></i></a></li>
+                        </ul>
+                        <h4>Demonstrações Contábeis</h4>
+                        <p>Documentos contábeis anuais assinados por profissionais habilitados, garantindo a fidedignidade de nossas finanças.</p>
+                        <ul class="document-list">
+                             <li><a href="#" target="_blank">Balanço Patrimonial 2024 (Assinado) <i class="fas fa-download"></i></a></li>
+                             <li><a href="#" target="_blank">Demonstração do Resultado (DRE) 2024 <i class="fas fa-download"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+             <section id="projetos" class="page">
+                <h2 class="section-title">Nossos Projetos</h2>
                  <div class="card animated-element">
                      <div class="card-body">
-                         <p>Acesse nossos relatórios financeiros e de atividades. A confiança da comunidade é nosso maior patrimônio.</p>
-                         <ul class="document-list">
-                             <li><a href="#">Balanço Financeiro - 1º Semestre 2025 <i class="fas fa-download"></i></a></li>
-                             <li><a href="#">Prestação de Contas - Anual 2024 <i class="fas fa-download"></i></a></li>
-                             <li><a href="#">Relatório de Atividades - 1º Semestre 2025 <i class="fas fa-download"></i></a></li>
-                         </ul>
+                         <h4>Projetos em Execução</h4>
+                         <p><strong>Projeto "Chute para o Futuro":</strong> Atendendo 80 crianças de 10 a 14 anos no contraturno escolar, com treinos de futebol, reforço escolar e acompanhamento psicossocial. Uma parceria com a Secretaria de Educação.</p>
+                         <h4>Projetos Concluídos</h4>
+                         <p><strong>Projeto "Férias com Esporte 2024":</strong> Durante o mês de Julho, oferecemos atividades recreativas e esportivas para 120 jovens da comunidade. <a href="#">Confira o relatório final e os resultados alcançados</a>.</p>
                      </div>
                  </div>
             </section>
 
-            <section id="contato" class="page">
-                 <h2 class="section-title animated-element">Fale Conosco</h2>
+            <section id="doacoes" class="page">
+                <h2 class="section-title">Apoie Nossos Sonhos</h2>
                  <div class="card animated-element">
                      <div class="card-body">
-                         <form id="contactForm">
-                             <input type="text" id="name" name="name" placeholder="Seu nome" required>
-                             <input type="email" id="email" name="email" placeholder="Seu e-mail" required>
-                             <textarea id="message" name="message" rows="5" placeholder="Sua mensagem" required></textarea>
-                             <button type="submit" class="btn btn-primary">Enviar</button>
-                         </form>
-                         <div id="form-feedback"></div>
+                         <p>Sua contribuição é investida diretamente no futuro dos nossos atletas, custeando uniformes, materiais, transporte e alimentação. Veja como você pode ajudar:</p>
+                         
+                         <h4>Para Pessoas Físicas</h4>
+                         <ul>
+                            <li><strong>Doação via PIX:</strong> Utilize a chave CNPJ <strong>02.533.223/0001-40</strong> para uma contribuição rápida e direta.</li>
+                            <li><strong>Adote um Aluno:</strong> Com <strong>R$ 9,99 por mês</strong> você garante o lanche de um atleta durante os treinos. (Link para doação recorrente)</li>
+                            <li><strong>Incentivo Fiscal:</strong> Saiba como destinar parte do seu Imposto de Renda para nosso projeto aprovado.</li>
+                         </ul>
+
+                         <h4>Para Empresas</h4>
+                          <ul>
+                            <li><strong>Patrocínio Direto:</strong> Associe sua marca ao nosso projeto e ganhe visibilidade em eventos e uniformes.</li>
+                            <li><strong>Dedução Fiscal:</strong> Apoie via Leis de Incentivo ao Esporte e abata impostos como IRPJ, ICMS ou ISS.</li>
+                         </ul>
+                         <a href="#contato" class="btn btn-primary mt-3">Quero Patrocinar</a>
                      </div>
                  </div>
             </section>
+            
+            <section id="contato" class="page">
+                 <h2 class="section-title">Fale Conosco</h2>
+                 <div class="card animated-element">
+                     <div class="card-body">
+                        <div class="content-grid">
+                            <div>
+                                 <h4>Mande uma mensagem</h4>
+                                 <form id="contactForm">
+                                     <input type="text" id="name" name="name" placeholder="Seu nome" required>
+                                     <input type="email" id="email" name="email" placeholder="Seu e-mail" required>
+                                     <textarea id="message" name="message" rows="4" placeholder="Sua mensagem" required></textarea>
+                                     <button type="submit" class="btn btn-primary">Enviar</button>
+                                 </form>
+                                 <div id="form-feedback"></div>
+                            </div>
+                            <div>
+                                <h4>Nossas Informações</h4>
+                                <p>
+                                    <strong>Endereço:</strong> Rua do Esporte, 123 - Bairro Centro<br>
+                                    Cidade/UF - CEP: 00000-000<br>
+                                    <strong>CNPJ:</strong> 02.533.223/0001-40<br>
+                                    <strong>E-mail:</strong> contato@canarioec.org.br<br>
+                                    <strong>Telefone:</strong> (XX) 99999-8888
+                                </p>
+                                <h4>Canal de Integridade</h4>
+                                <p>Para sugestões, elogios ou denúncias, utilize nosso <a href="#">canal de ouvidoria online</a>.</p>
+                            </div>
+                        </div>
+                     </div>
+                 </div>
+            </section>
+
+            <footer class="main-footer-content">
+                <div class="footer-links">
+                    <a href="#institucional">Estatuto Social</a> |
+                    <a href="#prestacao-contas">Prestação de Contas</a> |
+                    <a href="#projetos">Projetos</a> |
+                    <a href="#transparencia">Transparência</a> |
+                    <a href="#contato">Contato</a>
+                </div>
+                <p>Canário Esporte Clube - Todos os direitos reservados.</p>
+            </footer>
         </main>
     </div>
 

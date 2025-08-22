@@ -1,4 +1,4 @@
-// --- CONFIGURAÇÃO DO FIREBASE ---
+// --- CONFIGURAÇÃO DO FIREBASE (PARA FORMULÁRIO DE CONTATO) ---
 const firebaseConfig = {
   apiKey: "SUA_API_KEY",
   authDomain: "SEU_AUTH_DOMAIN",
@@ -9,6 +9,7 @@ const firebaseConfig = {
   appId: "SEU_APP_ID"
 };
 
+// Inicializa o Firebase apenas se a configuração estiver preenchida
 if (firebaseConfig.apiKey !== "SUA_API_KEY") {
     firebase.initializeApp(firebaseConfig);
 }
@@ -16,29 +17,22 @@ if (firebaseConfig.apiKey !== "SUA_API_KEY") {
 // --- LÓGICA PRINCIPAL DO SITE ---
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- LÓGICA DO MENU RESPONSIVO ---
     const menuToggle = document.getElementById('menu-toggle');
     const overlay = document.getElementById('overlay');
     const navLinks = document.querySelectorAll('.main-nav a');
 
-    // Função para fechar o menu
+    // --- LÓGICA DO MENU RESPONSIVO ---
     const closeMenu = () => {
         document.body.classList.remove('sidebar-open');
     };
 
-    // Abre/fecha o menu ao clicar no botão
     menuToggle.addEventListener('click', (e) => {
-        e.stopPropagation(); // Evita que o clique feche o menu imediatamente
+        e.stopPropagation();
         document.body.classList.toggle('sidebar-open');
     });
 
-    // Fecha o menu ao clicar no overlay
     overlay.addEventListener('click', closeMenu);
-
-    // Fecha o menu ao clicar em um link da navegação
-    navLinks.forEach(link => {
-        link.addEventListener('click', closeMenu);
-    });
+    navLinks.forEach(link => link.addEventListener('click', closeMenu));
 
     // --- NAVEGAÇÃO SPA (SINGLE PAGE APPLICATION) ---
     const navItems = document.querySelectorAll('.main-nav li');
@@ -49,38 +43,50 @@ document.addEventListener('DOMContentLoaded', () => {
             page.classList.toggle('active', '#' + page.id === hash);
         });
         navItems.forEach(item => {
-            item.classList.toggle('active', item.querySelector('a').hash === hash);
+            const link = item.querySelector('a');
+            if (link) {
+                item.classList.toggle('active', link.hash === hash);
+            }
         });
+        // Leva o usuário ao topo da página ao navegar
+        window.scrollTo(0, 0);
     }
 
     function handleHashChange() {
+        // Se a URL não tiver hash, define como #home
         const hash = window.location.hash || '#home';
         showPage(hash);
     }
 
     window.addEventListener('hashchange', handleHashChange);
-    navLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-            // A prevenção do default já estava aqui, mas é importante para o SPA
-            e.preventDefault(); 
-            window.location.hash = link.hash;
+    
+    // Adiciona evento de clique para todos os links que navegam entre seções
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const hash = this.getAttribute('href');
+            
+            // Apenas atualiza o hash se for diferente do atual para evitar recarregamento desnecessário
+            if(window.location.hash !== hash) {
+                window.location.hash = hash;
+            }
         });
     });
 
-    // Mostra a página inicial ou a página na URL
-    handleHashChange();
+    handleHashChange(); // Mostra a página correta ao carregar o site
 
     // --- ANIMAÇÃO AO ROLAR COM INTERSECTION OBSERVER ---
     const animatedElements = document.querySelectorAll('.animated-element');
-
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
+                // Opcional: para de observar após a primeira vez para não repetir a animação
+                // observer.unobserve(entry.target);
             }
         });
     }, {
-        threshold: 0.1 // Ativa quando 10% do elemento está visível
+        threshold: 0.1 // A animação começa quando 10% do elemento está visível
     });
 
     animatedElements.forEach(el => {
@@ -90,8 +96,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // --- FUNCIONALIDADE DE COPIAR CHAVE PIX ---
 function copyPixKey(pixKey) {
+    if (!navigator.clipboard) {
+        alert("A cópia não é suportada neste navegador.");
+        return;
+    }
     navigator.clipboard.writeText(pixKey).then(() => {
-        alert('Chave PIX copiada!');
+        alert('Chave PIX copiada para a área de transferência!');
     }, (err) => {
         alert('Erro ao copiar a chave PIX.');
         console.error('Erro ao copiar: ', err);
@@ -127,7 +137,7 @@ if (contactForm) {
             formFeedback.style.color = 'green';
             contactForm.reset();
         }).catch((error) => {
-            formFeedback.textContent = 'Ocorreu um erro ao enviar. Tente novamente.';
+            formFeedback.textContent = 'Ocorreu um erro. Tente novamente.';
             formFeedback.style.color = 'red';
             console.error('Erro ao salvar no Firebase: ', error);
         });
