@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Canário EC</title>
     <script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
@@ -34,60 +35,39 @@
             </header>
 
             <section id="dashboard-content" class="content-section active">
-                <div class="stat-cards">
-                    <div class="card"><h3>Documentos</h3><p class="stat-number" id="doc-count">0</p><span>Total Cadastrado</span></div>
-                    <div class="card"><h3>Projetos Ativos</h3><p class="stat-number" id="project-count">0</p><span>Em Execução</span></div>
-                    <div class="card"><h3>Mensagens</h3><p class="stat-number">0</p><span>Não Lidas</span></div>
+                <div class="charts-grid">
+                    <div class="card chart-container">
+                        <h3>Documentos por Categoria</h3>
+                        <div id="docCategoryChartWrapper"><canvas id="docCategoryChart"></canvas></div>
+                    </div>
+                    <div class="card chart-container">
+                        <h3>Status dos Projetos</h3>
+                        <div id="projectStatusChartWrapper"><canvas id="projectStatusChart"></canvas></div>
+                    </div>
+                    <div class="card chart-container full-width">
+                        <h3>Atividade nos Últimos 6 Meses</h3>
+                        <div id="monthlyActivityChartWrapper"><canvas id="monthlyActivityChart"></canvas></div>
+                    </div>
                 </div>
             </section>
 
             <section id="documentos-content" class="content-section">
-                <div class="card">
-                    <h2>Gerenciar Documentos</h2>
-                    <form id="add-document-form" class="add-document-form">
-                        <h3>Adicionar Novo Documento</h3>
-                        <input type="text" id="doc-title" placeholder="Título do Documento" required>
-                        <select id="doc-category" required>
-                            <option value="">Selecione a Categoria</option>
-                            <option value="Institucional">Institucional</option>
-                            <option value="Transparência">Transparência</option>
-                            <option value="Prestação de Contas">Prestação de Contas</option>
-                        </select>
-                        <button type="button" id="upload-doc-btn" class="btn btn-secondary">Escolher Arquivo</button>
-                        <div id="doc-file-info" class="file-info">Nenhum arquivo selecionado.</div>
-                        <button type="submit" class="btn btn-primary">Salvar Documento</button>
-                    </form>
-                    <table class="data-table"><thead id="documentos-head"><tr><th>Título</th><th>Categoria</th><th>Ações</th></tr></thead><tbody id="documentos-table-body"></tbody></table>
-                </div>
+                <div class="card"><h2>Gerenciar Documentos</h2><form id="add-document-form" class="add-document-form"><h3>Adicionar Novo Documento</h3><input type="text" id="doc-title" placeholder="Título do Documento" required><select id="doc-category" required><option value="">Selecione a Categoria</option><option value="Institucional">Institucional</option><option value="Transparência">Transparência</option><option value="Prestação de Contas">Prestação de Contas</option></select><button type="button" id="upload-doc-btn" class="btn btn-secondary">Escolher Arquivo</button><div id="doc-file-info" class="file-info">Nenhum arquivo selecionado.</div><button type="submit" id="doc-submit-btn" class="btn btn-primary" disabled>Salvar Documento</button></form><table class="data-table"><thead><tr><th>Título</th><th>Categoria</th><th>Ações</th></tr></thead><tbody id="documentos-table-body"></tbody></table></div>
             </section>
-            
             <section id="projetos-content" class="content-section">
-                 <div class="card">
-                    <h2>Gerenciar Projetos</h2>
-                    <form id="add-project-form" class="add-project-form">
-                         <h3>Adicionar Novo Projeto</h3>
-                         <input type="text" id="project-title" placeholder="Título do Projeto" required>
-                         <textarea id="project-desc" placeholder="Breve descrição do projeto" rows="3" required></textarea>
-                         <select id="project-status" required>
-                            <option value="Em Execução">Em Execução</option>
-                            <option value="Concluído">Concluído</option>
-                         </select>
-                         <button type="submit" class="btn btn-primary">Salvar Projeto</button>
-                    </form>
-                    <table class="data-table"><thead id="projetos-head"><tr><th>Título</th><th>Status</th><th>Ações</th></tr></thead><tbody id="projetos-table-body"></tbody></table>
-                </div>
+                 <div class="card"><h2>Gerenciar Projetos</h2><form id="add-project-form" class="add-project-form"><h3>Adicionar Novo Projeto</h3><input type="text" id="project-title" placeholder="Título do Projeto" required><textarea id="project-desc" placeholder="Breve descrição do projeto" rows="3" required></textarea><select id="project-status" required><option value="Em Execução">Em Execução</option><option value="Concluído">Concluído</option></select><button type="submit" class="btn btn-primary">Salvar Projeto</button></form><table class="data-table"><thead><tr><th>Título</th><th>Status</th><th>Ações</th></tr></thead><tbody id="projetos-table-body"></tbody></table></div>
             </section>
-
-             <section id="institucional-content" class="content-section">
-                <div class="card"><h2>Gerenciar Conteúdo Institucional</h2><p>Área para editar textos como "Quem Somos", "Missão", "Visão", "Valores" e informações da diretoria.</p></div>
+            <section id="institucional-content" class="content-section">
+                <div class="card"><h2>Gerenciar Conteúdo Institucional</h2><p>Altere os textos abaixo. Eles serão exibidos na seção "Institucional" do site público.</p><form id="institucional-form" class="content-form"><label for="inst-missao">Missão</label><textarea id="inst-missao" rows="4"></textarea><label for="inst-visao">Visão e Valores</label><textarea id="inst-visao" rows="4"></textarea><label for="inst-diretoria">Diretoria e Conselhos</label><textarea id="inst-diretoria" rows="4" placeholder="Ex: Presidente: Nome (Voluntário)"></textarea><button type="submit" class="btn btn-primary">Salvar Alterações</button></form></div>
             </section>
-
-             <section id="mensagens-content" class="content-section">
-                <div class="card"><h2>Caixa de Entrada</h2><p>Aqui serão exibidas as mensagens enviadas pelo formulário de contato do site público.</p></div>
+            <section id="mensagens-content" class="content-section">
+                <div class="card"><h2>Caixa de Entrada</h2><p>Mensagens enviadas pelo formulário de contato do site público.</p><table class="data-table"><thead><tr><th>Remetente</th><th>E-mail</th><th>Data</th><th>Ações</th></tr></thead><tbody id="mensagens-table-body"></tbody></table></div>
             </section>
-
         </main>
     </div>
+
+    <div id="message-modal" class="modal"><div class="modal-content"><span class="modal-close-btn">&times;</span><h3 id="modal-sender"></h3><p><strong id="modal-email"></strong> - <em id="modal-date"></em></p><hr><p id="modal-message-body"></p></div></div>
+    
     <script type="module" src="dashboard.js"></script>
 </body>
 </html>
