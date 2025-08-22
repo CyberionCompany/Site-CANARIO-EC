@@ -3,7 +3,7 @@ import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/
 import { collection, addDoc, getDocs, doc, deleteDoc, query, where, setDoc, getDoc, Timestamp, orderBy, limit, updateDoc } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
 
 // --- CONFIGURAÇÃO E ELEMENTOS GLOBAIS ---
-const UPLOADCARE_PUBLIC_KEY = "SUA_CHAVE_PUBLICA_DO_UPLOADCARE";
+const UPLOADCARE_PUBLIC_KEY = "42770f8d4d631daceb62";
 let uploadedFileInfo = null;
 
 const loader = document.getElementById('loader');
